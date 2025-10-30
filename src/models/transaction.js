@@ -6,15 +6,14 @@ export class Transaction {
 
     const invoiceNumber = generateInvoice(await this.lastInvoice());
 
-    const [result] = await pool.execute(
-      "INSERT INTO transactions (user_id, invoice_number, transaction_type, total_amount, description, service_code) VALUES (?, ?, ?, ?, ?, ?)",
-      [userId, invoiceNumber, type, amount, description, service_code]
-    );
+    const query = "INSERT INTO transactions (user_id, invoice_number, transaction_type, total_amount, description, service_code) VALUES (?, ?, ?, ?, ?, ?)";
+    const [result] = await pool.execute(query, [userId, invoiceNumber, type, amount, description, service_code]);
     return result.insertId;
   }
 
   static async findById(id) {
-    const [rows] = await pool.execute("SELECT a.*, b.service_name FROM transactions a, services b WHERE a.id = ? AND a.service_code = b.service_code", [id]);
+    const query = "SELECT a.*, b.service_name FROM transactions a, services b WHERE a.id = ? AND a.service_code = b.service_code";
+    const [rows] = await pool.execute(query, [id]);
     return rows[0];
   }
 

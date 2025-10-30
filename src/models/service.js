@@ -2,12 +2,14 @@ import pool from "../config/db.js";
 
 export class Service {
     static async getData() {
-        const [rows] = await pool.execute("SELECT * FROM services");
+        const query = "SELECT * FROM services";
+        const [rows] = await pool.execute(query);
         return rows;
     }
 
     static async findByCode(serviceCode) {
-        const [rows] = await pool.execute("SELECT * FROM services WHERE service_code = ?", [serviceCode]);
+        const query = "SELECT * FROM services WHERE service_code = ?";
+        const [rows] = await pool.execute(query, [serviceCode]);
         return rows[0];
     }
 }
