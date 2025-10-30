@@ -36,7 +36,7 @@ export const getTransactionHistory = async (req, res) => {
         return success(res, "Get History Berhasil", 200, {
             offset: offset ? offset : 0,
             limit: limit ? limit : transactions.length,
-            record: transactions.map(mapTransactionHistory)
+            records: transactions.map(mapTransactionHistory)
         });
     } catch (err) {
         return error(res, err.message, 500);
