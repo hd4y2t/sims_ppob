@@ -30,6 +30,19 @@ export const mapTransaction = (transaction) => {
 
     return {
         invoice_number: transaction.invoice_number,
+        service_code: transaction.service_code,
+        service_name: transaction.service_name,
+        transaction_type: transaction.transaction_type,
+        total_amount: parseFloat(transaction.total_amount),
+        created_on: transaction.created_at,
+    };
+};
+
+export const mapTransactionHistory = (transaction) => {
+    if (!transaction) return null;
+
+    return {
+        invoice_number: transaction.invoice_number,
         transaction_type: transaction.transaction_type,
         description: transaction.description,
         total_amount: parseFloat(transaction.total_amount),

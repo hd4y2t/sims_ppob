@@ -2,7 +2,7 @@ import { createTransaction, getUserBalance, getTransaction, getTransactionById }
 import { error, success } from "../../utils/response.js";
 import { findService } from "../../services/informations/service.service.js";
 import { decrementBalance } from "../../services/memberships/user.service.js";
-import { mapTransaction } from "../../helpers/helper.js";
+import { mapTransaction, mapTransactionHistory } from "../../helpers/helper.js";
 
 export const transaction = async (req, res) => {
     try {
@@ -19,7 +19,7 @@ export const transaction = async (req, res) => {
 
 
         await decrementBalance(req.user.id, amount);
-        const transaction = await createTransaction(req.user.id, "PAYMENT", amount, description, service.service_code, service.service_name);
+        const transaction = await createTransaction(req.user.id, "PAYMENT", amount, description, service.service_code);
 
         const result = await getTransactionById(transaction);
 
@@ -34,9 +34,9 @@ export const getTransactionHistory = async (req, res) => {
         const { limit, offset } = req.body;
         const transactions = await getTransaction(req.user.id, limit, offset);
         return success(res, "Get History Berhasil", 200, {
-            offset: offset,
-            limit: limit,
-            record: transactions.map(mapTransaction)
+            offset: offset ? offset : 0,
+            limit: limit ? limit : transactions.length,
+            record: transactions.map(mapTransactionHistory)
         });
     } catch (err) {
         return error(res, err.message, 500);

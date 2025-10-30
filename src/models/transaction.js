@@ -2,19 +2,19 @@ import pool from "../config/db.js";
 import { generateInvoice } from "../helpers/helper.js";
 
 export class Transaction {
-  static async create(userId, type, amount, description, service_code = null, service_name = null) {
+  static async create(userId, type, amount, description, service_code = null) {
 
     const invoiceNumber = generateInvoice(await this.lastInvoice());
 
     const [result] = await pool.execute(
-      "INSERT INTO transactions (user_id, invoice_number, transaction_type, total_amount, description, service_code, service_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [userId, invoiceNumber, type, amount, description, service_code, service_name]
+      "INSERT INTO transactions (user_id, invoice_number, transaction_type, total_amount, description, service_code) VALUES (?, ?, ?, ?, ?, ?)",
+      [userId, invoiceNumber, type, amount, description, service_code]
     );
     return result.insertId;
   }
 
   static async findById(id) {
-    const [rows] = await pool.execute("SELECT * FROM transactions WHERE id = ?", [id]);
+    const [rows] = await pool.execute("SELECT a.*, b.service_name FROM transactions a, services b WHERE a.id = ? AND a.service_code = b.service_code", [id]);
     return rows[0];
   }
 

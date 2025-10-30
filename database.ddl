@@ -27,7 +27,6 @@ CREATE TABLE transactions (
   invoice_number VARCHAR(50),
   transaction_type ENUM('TOPUP', 'PAYMENT'),
   service_code VARCHAR(50),
-  service_name VARCHAR(50),
   description TEXT,
   total_amount DECIMAL(12,2),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -1,8 +1,8 @@
 import pool from "../../config/db.js";
 import { Transaction } from "../../models/transaction.js";
 
-export const createTransaction = async (userId, type, amount, description = null, service_code = null, service_name = null) => {
-  const transaction = await Transaction.create(userId, type, amount, description, service_code, service_name);
+export const createTransaction = async (userId, type, amount, description = null, service_code = null) => {
+  const transaction = await Transaction.create(userId, type, amount, description, service_code);
   return transaction;
 };
 
