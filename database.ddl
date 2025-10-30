@@ -28,7 +28,7 @@ CREATE TABLE transactions (
   service_code VARCHAR(50),
   service_name VARCHAR(50),
   description TEXT,
-  amount DECIMAL(12,2),
+  total_amount DECIMAL(12,2),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );

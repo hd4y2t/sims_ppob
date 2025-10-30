@@ -1,14 +1,9 @@
 import pool from "../config/db.js";
+import { Transaction } from "../models/transaction.js";
 
-export const deductBalance = async (userId, amount) => {
-  await pool.execute("UPDATE users SET balance = balance - ? WHERE id = ?", [amount, userId]);
-};
-
-export const createTransaction = async (userId, type, amount, description) => {
-  await pool.execute(
-    "INSERT INTO transactions (user_id, type, amount, description) VALUES (?, ?, ?, ?)",
-    [userId, type, amount, description]
-  );
+export const createTransaction = async (userId, type, amount, description = null, service_code = null, service_name = null) => {
+  const transaction = await Transaction.create(userId, type, amount, description, service_code, service_name);
+  return transaction;
 };
 
 export const getUserBalance = async (userId) => {
@@ -16,7 +11,12 @@ export const getUserBalance = async (userId) => {
   return rows[0].balance;
 };
 
-export const lastInvoice = async () => {
-  const [rows] = await pool.execute("SELECT invoice_number FROM transactions ORDER BY created_at DESC LIMIT 1");
-  return rows[0] ? rows[0].invoice_number : null;
+export const getTransaction = async (userId, limit, offset) => {
+  const transactions = await Transaction.findByUser(userId, limit, offset);
+  return transactions;
+}
+
+export const getTransactionById = async (id) => {
+  const transaction = await Transaction.findById(id);
+  return transaction; 
 }

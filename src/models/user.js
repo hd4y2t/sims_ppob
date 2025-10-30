@@ -42,4 +42,9 @@ export class User {
             userId,
         ]);
     }
+
+    static async getBalance(id) {
+        const [rows] = await pool.execute("SELECT balance FROM users WHERE id = ?", [id]);
+        return rows[0].balance;
+    }
 }

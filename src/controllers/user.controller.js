@@ -2,18 +2,8 @@ import { findUserByEmail, updateUserData, updateProfileImage } from "../services
 import { success, error } from "../utils/response.js";
 import multer from "multer";
 import dotenv from "dotenv";
+import { mapUserProfile } from "../helpers/helper.js";
 dotenv.config();
-
-const mapUserProfile = (dataUser) => {
-    if (!dataUser) return null;
-
-    return {
-        first_name: dataUser.first_name,
-        last_name: dataUser.last_name,
-        email: dataUser.email,
-        profile_image: `${process.env.BASE_URL}${dataUser.profile_image}`
-    };
-};
 
 export const getProfile = async (req, res) => {
     try {

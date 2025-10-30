@@ -1,14 +1,14 @@
-import pool from "../config/db.js";
-import { deductBalance, createTransaction, getUserBalance } from "../services/transaction.service.js";
+import { createTransaction, getUserBalance, getTransaction, getTransactionById } from "../services/transaction.service.js";
 import { error, success } from "../utils/response.js";
 import { findService } from "../services/service.service.js";
+import { decrementBalance } from "../services/user.service.js";
+import { mapTransaction } from "../helpers/helper.js";
 
-export const transact = async (req, res) => {
+export const transaction = async (req, res) => {
     try {
-
-        const { service_code } = req.body;
-
+        const { service_code, description } = req.body;
         const service = await findService(service_code);
+
         if (!service)
             return error(res, "Service ataus Layanan tidak ditemukan", 402);
         const amount = service.service_tariff;
@@ -18,11 +18,26 @@ export const transact = async (req, res) => {
             return error(res, "Insufficient balance", 400);
 
 
-        await deductBalance(req.user.id, amount);
-        await createTransaction(req.user.id, service.id, amount, service.service_name);
+        await decrementBalance(req.user.id, amount);
+        const transaction = await createTransaction(req.user.id, "PAYMENT", amount, description, service.service_code, service.service_name);
 
-        return success(res, "Transaction success", 200, );
+        const result = await getTransactionById(transaction);
 
+        return success(res, "Transaction success", 200, mapTransaction(result));
+    } catch (err) {
+        return error(res, err.message, 500);
+    }
+};
+
+export const getTransactionHistory = async (req, res) => {
+    try {
+        const { limit, offset } = req.body;
+        const transactions = await getTransaction(req.user.id, limit, offset);
+        return success(res, "Get History Berhasil", 200, {
+            offset: offset,
+            limit: limit,
+            record: transactions.map(mapTransaction)
+        });
     } catch (err) {
         return error(res, err.message, 500);
     }

@@ -1,6 +1,5 @@
-import pool from "../config/db.js";
+import { Topup } from "../models/topup.js";
 
-export const addBalance = async (userId, amount) => {
-  await pool.execute("UPDATE users SET balance = balance + ? WHERE id = ?", [amount, userId]);
-  await pool.execute("INSERT INTO topups (user_id, amount) VALUES (?, ?)", [userId, amount]);
+export const createTopup = async (userId, amount) => {
+  await Topup.create(userId, amount);
 };

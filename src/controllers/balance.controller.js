@@ -1,5 +1,5 @@
 import { success, error } from "../utils/response.js";
-import { getUserBalance } from "../services/balance.service.js";
+import { getBalance as balanceUser } from "../services/user.service.js";
 
 export const getBalance = async (req, res) => {
     try {
@@ -9,8 +9,8 @@ export const getBalance = async (req, res) => {
             return error(res, "Token tidak tidak valid atau kadaluwarsa", 408);
         }
 
-        const data = await getUserBalance(user.id);
-        return success(res, "Get Balance Berhasil", 200, { balance: parseFloat(data.balance) });
+        const balance = await balanceUser(user.id);
+        return success(res, "Get Balance Berhasil", 200, { balance: parseFloat(balance) });
     } catch (err) {
         return error(res, err.message, 500);
     }

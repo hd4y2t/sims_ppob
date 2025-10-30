@@ -18,3 +18,16 @@ export const updateProfileImage = async (userId, filePath) => {
     const user = await User.findById(userId);
     return user;
 };
+
+export const incrementBalance = async (userId, amount) => {
+    await User.incrementBalance(userId, amount);
+}
+
+export const decrementBalance = async (userId, amount) => {
+    await User.decrementBalance(userId, amount);
+}
+
+export const getBalance = async (userId) => {
+    const balance = await User.getBalance(userId);
+    return balance;
+};
