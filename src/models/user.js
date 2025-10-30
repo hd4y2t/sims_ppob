@@ -20,10 +20,6 @@ export class User {
         return rows[0];
     }
 
-    static async updateBalance(id, amount) {
-        await pool.execute("UPDATE users SET balance = ? WHERE id = ?", [amount, id]);
-    }
-
     static async incrementBalance(id, amount) {
         await pool.execute("UPDATE users SET balance = balance + ? WHERE id = ?", [amount, id]);
     }
