@@ -13,12 +13,15 @@ export const generateInvoice = (lastInvoiceNumber) => {
 
 export const mapUserProfile = (dataUser) => {
     if (!dataUser) return null;
+    
+    let profileImage = dataUser.profile_image || null;
+    profileImage = profileImage ? `${process.env.BASE_URL}${profileImage}` : null;
 
     return {
         first_name: dataUser.first_name,
         last_name: dataUser.last_name,
         email: dataUser.email,
-        profile_image: `${process.env.BASE_URL}${dataUser.profile_image}`
+        profile_image: profileImage
     };
 };
 
