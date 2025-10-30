@@ -1,5 +1,5 @@
-import { getData } from "../services/banner.service.js";
-import { success, error } from "../utils/response.js";
+import { getData } from "../../services/informations/banner.service.js";
+import { success, error } from "../../utils/response.js";
 
 export const getDataBanner = async (req, res) => {
     try {

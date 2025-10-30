@@ -1,8 +1,8 @@
 
-import { success, error } from "../utils/response.js";
-import { createTopup } from "../services/topup.service.js";
-import { getBalance, incrementBalance } from "../services/user.service.js";
-import { createTransaction } from "../services/transaction.service.js";
+import { success, error } from "../../utils/response.js";
+import { createTopup } from "../../services/transactions/topup.service.js";
+import { getBalance, incrementBalance } from "../../services/memberships/user.service.js";
+import { createTransaction } from "../../services/transactions/transaction.service.js";
 
 
 export const topup = async (req, res) => {

@@ -1,8 +1,8 @@
-import { createTransaction, getUserBalance, getTransaction, getTransactionById } from "../services/transaction.service.js";
-import { error, success } from "../utils/response.js";
-import { findService } from "../services/service.service.js";
-import { decrementBalance } from "../services/user.service.js";
-import { mapTransaction } from "../helpers/helper.js";
+import { createTransaction, getUserBalance, getTransaction, getTransactionById } from "../../services/transactions/transaction.service.js";
+import { error, success } from "../../utils/response.js";
+import { findService } from "../../services/informations/service.service.js";
+import { decrementBalance } from "../../services/memberships/user.service.js";
+import { mapTransaction } from "../../helpers/helper.js";
 
 export const transaction = async (req, res) => {
     try {

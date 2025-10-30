@@ -1,8 +1,8 @@
-import { findUserByEmail, updateUserData, updateProfileImage } from "../services/user.service.js";
-import { success, error } from "../utils/response.js";
+import { findUserByEmail, updateUserData, updateProfileImage } from "../../services/memberships/user.service.js";
+import { success, error } from "../../utils/response.js";
+import { mapUserProfile } from "../../helpers/helper.js";
 import multer from "multer";
 import dotenv from "dotenv";
-import { mapUserProfile } from "../helpers/helper.js";
 dotenv.config();
 
 export const getProfile = async (req, res) => {

@@ -1,4 +1,4 @@
-import { Service } from "../models/service.js";
+import { Service } from "../../models/service.js";
 
 export const getData = async () => {
     return await Service.getData();

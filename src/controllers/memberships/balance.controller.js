@@ -1,5 +1,5 @@
-import { success, error } from "../utils/response.js";
-import { getBalance as balanceUser } from "../services/user.service.js";
+import { success, error } from "../../utils/response.js";
+import { getBalance as balanceUser } from "../../services/memberships/user.service.js";
 
 export const getBalance = async (req, res) => {
     try {

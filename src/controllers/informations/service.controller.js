@@ -1,5 +1,5 @@
-import { getData } from "../services/service.service.js";
-import { success, error } from "../utils/response.js";
+import { getData } from "../../services/informations/service.service.js";
+import { success, error } from "../../utils/response.js";
 
 export const getDataService = async (req, res) => {
     try {
